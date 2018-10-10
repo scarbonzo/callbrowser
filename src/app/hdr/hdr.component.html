@@ -1,0 +1,334 @@
+<div class="row" style="margin-top: 5px; margin-left: -8px;">
+  <div class="col s12 l2">
+    <div class="card light-blue darken-4 z-depth-5">
+      <div class="card-content white-text">
+        <span class="card-title orange-text">Help Desk Call Report</span>
+        <br />
+        <div class="row">
+          <form class="col s12">
+            <div class="row">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">calendar_today</i>
+                <input name="start" id="start" type="date" class="datepicker yellow-text" [ngModel]="start | date:'yyyy-MM-dd'"
+                  (ngModelChange)="start = $event" required>
+                <label for="start">Start</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">calendar_today</i>
+                <input name="end" id="end" type="date" class="datepicker yellow-text" [ngModel]="end | date:'yyyy-MM-dd'"
+                  (ngModelChange)="end = $event" required>
+                <label for="end">End</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12 center">
+                <a class="waves-effect waves-light btn" (click)="getReport()">Search</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s12 l10" style="margin-left: -12px; margin-right: 12px;">
+    <div class="col s12 l3">
+      <div class="card light-blue darken-4 z-depth-5">
+        <div class="card-content white-text">
+          <span class="card-title yellow-text">Grand Total</span>
+          <table>
+            <tbody>
+              <tr>
+                <td>Total Calls:</td>
+                <td class="yellow-text right">{{sources.totalCalls.totalCalls}}</td>
+              </tr>
+              <tr>
+                <td>Answered Calls:</td>
+                <td class="yellow-text right">{{sources.totalCalls.answeredCalls}}</td>
+              </tr>
+              <tr>
+                <td>Unanswered Calls:</td>
+                <td class="yellow-text right">{{sources.totalCalls.unansweredCalls}}</td>
+              </tr>
+              <tr>
+                <td>Total Minutes:</td>
+                <td class="yellow-text right">{{sources.totalCalls.totalMinutes| number: '1.0-0'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 l3">
+      <div class="card light-blue darken-4 z-depth-5">
+        <div class="card-content white-text">
+          <span class="card-title yellow-text">Non-LSNJ</span>
+          <table>
+            <tbody>
+              <tr>
+                <td>Total Calls:</td>
+                <td class="yellow-text right">{{sources.totalCalls.totalCalls - sources.lsnjCalls.totalCalls}}</td>
+              </tr>
+              <tr>
+                <td>Answered Calls:</td>
+                <td class="yellow-text right">{{sources.totalCalls.answeredCalls - sources.lsnjCalls.answeredCalls}}</td>
+              </tr>
+              <tr>
+                <td>Unanswered Calls:</td>
+                <td class="yellow-text right">{{sources.totalCalls.unansweredCalls -
+                  sources.lsnjCalls.unansweredCalls}}</td>
+              </tr>
+              <tr>
+                <td>Total Minutes:</td>
+                <td class="yellow-text right">{{sources.totalCalls.totalMinutes - sources.lsnjCalls.totalMinutes|
+                  number:
+                  '1.0-0'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 l3">
+      <div class="card light-blue darken-4 z-depth-5">
+        <div class="card-content white-text">
+          <span class="card-title yellow-text">LSNJ</span>
+          <table>
+            <tbody>
+              <tr>
+                <td>Total Calls:</td>
+                <td class="yellow-text right">{{sources.lsnjCalls.totalCalls}}</td>
+              </tr>
+              <tr>
+                <td>Answered Calls:</td>
+                <td class="yellow-text right">{{sources.lsnjCalls.answeredCalls}}</td>
+              </tr>
+              <tr>
+                <td>Unanswered Calls:</td>
+                <td class="yellow-text right">{{sources.lsnjCalls.unansweredCalls}}</td>
+              </tr>
+              <tr>
+                <td>Total Minutes:</td>
+                <td class="yellow-text right">{{sources.lsnjCalls.totalMinutes| number: '1.0-0'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 l3">
+      <div class="card light-blue darken-4 z-depth-5">
+        <div class="card-content white-text">
+          <span class="card-title yellow-text">NNJLS</span>
+          <table>
+            <tbody>
+              <tr>
+                <td>Total Calls:</td>
+                <td class="yellow-text right">{{sources.nnjlsCalls.totalCalls}}</td>
+              </tr>
+              <tr>
+                <td>Answered Calls:</td>
+                <td class="yellow-text right">{{sources.nnjlsCalls.answeredCalls}}</td>
+              </tr>
+              <tr>
+                <td>Unanswered Calls:</td>
+                <td class="yellow-text right">{{sources.nnjlsCalls.unansweredCalls}}</td>
+              </tr>
+              <tr>
+                <td>Total Minutes:</td>
+                <td class="yellow-text right">{{sources.nnjlsCalls.totalMinutes| number: '1.0-0'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 l3">
+      <div class="card light-blue darken-4 z-depth-5">
+        <div class="card-content white-text">
+          <span class="card-title yellow-text">ENLS</span>
+          <table>
+            <tbody>
+              <tr>
+                <td>Total Calls:</td>
+                <td class="yellow-text right">{{sources.enlsCalls.totalCalls}}</td>
+              </tr>
+              <tr>
+                <td>Answered Calls:</td>
+                <td class="yellow-text right">{{sources.enlsCalls.answeredCalls}}</td>
+              </tr>
+              <tr>
+                <td>Unanswered Calls:</td>
+                <td class="yellow-text right">{{sources.enlsCalls.unansweredCalls}}</td>
+              </tr>
+              <tr>
+                <td>Total Minutes:</td>
+                <td class="yellow-text right">{{sources.enlsCalls.totalMinutes| number: '1.0-0'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 l3">
+      <div class="card light-blue darken-4 z-depth-5">
+        <div class="card-content white-text">
+          <span class="card-title yellow-text">SJLS</span>
+          <table>
+            <tbody>
+              <tr>
+                <td>Total Calls:</td>
+                <td class="yellow-text right">{{sources.sjlsCalls.totalCalls}}</td>
+              </tr>
+              <tr>
+                <td>Answered Calls:</td>
+                <td class="yellow-text right">{{sources.sjlsCalls.answeredCalls}}</td>
+              </tr>
+              <tr>
+                <td>Unanswered Calls:</td>
+                <td class="yellow-text right">{{sources.sjlsCalls.unansweredCalls}}</td>
+              </tr>
+              <tr>
+                <td>Total Minutes:</td>
+                <td class="yellow-text right">{{sources.sjlsCalls.totalMinutes| number: '1.0-0'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 l3">
+      <div class="card light-blue darken-4 z-depth-5">
+        <div class="card-content white-text">
+          <span class="card-title yellow-text">CJLS</span>
+          <table>
+            <tbody>
+              <tr>
+                <td>Total Calls:</td>
+                <td class="yellow-text right">{{sources.cjlsCalls.totalCalls}}</td>
+              </tr>
+              <tr>
+                <td>Answered Calls:</td>
+                <td class="yellow-text right">{{sources.cjlsCalls.answeredCalls}}</td>
+              </tr>
+              <tr>
+                <td>Unanswered Calls:</td>
+                <td class="yellow-text right">{{sources.cjlsCalls.unansweredCalls}}</td>
+              </tr>
+              <tr>
+                <td>Total Minutes:</td>
+                <td class="yellow-text right">{{sources.cjlsCalls.totalMinutes| number: '1.0-0'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 l3">
+      <div class="card light-blue darken-4 z-depth-5">
+        <div class="card-content white-text">
+          <span class="card-title yellow-text">LSNWJ</span>
+          <table>
+            <tbody>
+              <tr>
+                <td>Total Calls:</td>
+                <td class="yellow-text right">{{sources.lsnwjCalls.totalCalls}}</td>
+              </tr>
+              <tr>
+                <td>Answered Calls:</td>
+                <td class="yellow-text right">{{sources.lsnwjCalls.answeredCalls}}</td>
+              </tr>
+              <tr>
+                <td>Unanswered Calls:</td>
+                <td class="yellow-text right">{{sources.lsnwjCalls.unansweredCalls}}</td>
+              </tr>
+              <tr>
+                <td>Total Minutes:</td>
+                <td class="yellow-text right">{{sources.lsnwjCalls.totalMinutes| number: '1.0-0'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col s5">
+      <div class="card light-blue darken-4 z-depth-3">
+        <div class="card-content white-text">
+          <span class="card-title yellow-text">
+            <h5>Board Report</h5>
+          </span>
+          <br />
+          <table class="highlight">
+            <thead class="orange-text">
+              <td class="col s4 center-align">Source</td>
+              <td class="col s2 center-align">Total Calls</td>
+              <td class="col s2 center-align">Total Minutes</td>
+              <td class="col s2 center-align">Answered</td>
+              <td class="col s2 center-align">Unanswered</td>
+            </thead>
+            <div class="divider"></div>
+            <tbody>
+              <tr>
+                <td class="col s4 center-align">{{sources.lsnjCalls.name}}</td>
+                <td class="col s2 center-align">{{sources.lsnjCalls.totalCalls}}</td>
+                <td class="col s2 center-align">{{sources.lsnjCalls.totalMinutes| number: '1.0-0'}}</td>
+                <td class="col s2 center-align">{{sources.lsnjCalls.answeredCalls}}</td>
+                <td class="col s2 center-align grey-text">{{sources.lsnjCalls.unansweredCalls}}</td>
+              </tr>
+              <tr>
+                <td class="col s4 center-align">{{sources.cjlsCalls.name}}</td>
+                <td class="col s2 center-align">{{sources.cjlsCalls.totalCalls}}</td>
+                <td class="col s2 center-align">{{sources.cjlsCalls.totalMinutes| number: '1.0-0'}}</td>
+                <td class="col s2 center-align">{{sources.cjlsCalls.answeredCalls}}</td>
+                <td class="col s2 center-align grey-text">{{sources.cjlsCalls.unansweredCalls}}</td>
+              </tr>
+              <tr>
+                <td class="col s4 center-align">{{sources.enlsCalls.name}}</td>
+                <td class="col s2 center-align">{{sources.enlsCalls.totalCalls}}</td>
+                <td class="col s2 center-align">{{sources.enlsCalls.totalMinutes| number: '1.0-0'}}</td>
+                <td class="col s2 center-align">{{sources.enlsCalls.answeredCalls}}</td>
+                <td class="col s2 center-align grey-text">{{sources.enlsCalls.unansweredCalls}}</td>
+              </tr>
+              <tr>
+                <td class="col s4 center-align">{{sources.sjlsCalls.name}}</td>
+                <td class="col s2 center-align">{{sources.sjlsCalls.totalCalls}}</td>
+                <td class="col s2 center-align">{{sources.sjlsCalls.totalMinutes| number: '1.0-0'}}</td>
+                <td class="col s2 center-align">{{sources.sjlsCalls.answeredCalls}}</td>
+                <td class="col s2 center-align grey-text">{{sources.sjlsCalls.unansweredCalls}}</td>
+              </tr>
+              <tr>
+                <td class="col s4 center-align">{{sources.lsnwjCalls.name}}</td>
+                <td class="col s2 center-align">{{sources.lsnwjCalls.totalCalls}}</td>
+                <td class="col s2 center-align">{{sources.lsnwjCalls.totalMinutes| number: '1.0-0'}}</td>
+                <td class="col s2 center-align">{{sources.lsnwjCalls.answeredCalls}}</td>
+                <td class="col s2 center-align grey-text">{{sources.lsnwjCalls.unansweredCalls}}</td>
+              </tr>
+              <tr>
+                <td class="col s4 center-align">{{sources.nnjlsCalls.name}}</td>
+                <td class="col s2 center-align">{{sources.nnjlsCalls.totalCalls}}</td>
+                <td class="col s2 center-align">{{sources.nnjlsCalls.totalMinutes| number: '1.0-0'}}</td>
+                <td class="col s2 center-align">{{sources.nnjlsCalls.answeredCalls}}</td>
+                <td class="col s2 center-align grey-text">{{sources.nnjlsCalls.unansweredCalls}}</td>
+              </tr>
+              <tr>
+                <td class="col s4 center-align">{{sources.externalCalls.name}}</td>
+                <td class="col s2 center-align">{{sources.externalCalls.totalCalls}}</td>
+                <td class="col s2 center-align">{{sources.externalCalls.totalMinutes| number: '1.0-0'}}</td>
+                <td class="col s2 center-align">{{sources.externalCalls.answeredCalls}}</td>
+                <td class="col s2 center-align grey-text">{{sources.externalCalls.unansweredCalls}}</td>
+              </tr>
+              <div class="divider"></div>
+              <tr class="yellow-text">
+                <td class="col s4 center-align">{{sources.totalCalls.name}}</td>
+                <td class="col s2 center-align">{{sources.totalCalls.totalCalls}}</td>
+                <td class="col s2 center-align">{{sources.totalCalls.totalMinutes| number: '1.0-0'}}</td>
+                <td class="col s2 center-align">{{sources.totalCalls.answeredCalls}}</td>
+                <td class="col s2 center-align">{{sources.totalCalls.unansweredCalls}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
